@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv"
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion } from "mongodb";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,7 +21,7 @@ const password = process.env.DB_PASSWORD
 
 const uri = `mongodb+srv://${userName}:${password}@cluster0.b3nlp4l.mongodb.net/`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -105,14 +105,15 @@ async function run() {
     } catch (err) {
         console.log('backend data error is ', err);
     }
+    app.get('/', (req, res) => {
+        res.send('Hello World!')
+    })
+
+    app.listen(PORT, () => {
+        console.log(`Example app listening on port ${PORT}`)
+    })
 }
 run().catch(console.dir);
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
 
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
-})
